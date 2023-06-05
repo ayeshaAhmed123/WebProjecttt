@@ -52,6 +52,14 @@ const getProductofSeller=async (req, res) => {
   res.status(500).json({ message: err.message });
 }
   }
+  const getAllProduct=async (req, res) => {
+    try {
+    const products = await productModel.find();
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+    }
 
   const findProductByName = async (req, res) => {
    try{
@@ -73,12 +81,21 @@ const findProductWithCategory=async (req, res) => {
  try {
 
    let category = req.params.category;
-   const products = await productModel.find({ category: { $regex: new RegExp(category, 'i') } });
+   const products = await productModel.find({ category: { $regex: new RegExp(category, 'i') } , seller_id: req.ID});
    res.json(products);
  } catch (err) {
    res.status(500).json({ message: err.message });
  }
 }
-
-module.exports={create,updateProduct,delProduct,getProductofSeller,findProductByName,findProductWithCategory}
+const findProductWithCategoryHome=async (req, res) => {
+  try {
+    let category = req.params.category;
+    const products = await productModel.find({ category: { $regex: new RegExp(category, 'i') } });
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+ }
+ 
+module.exports={create,updateProduct,delProduct,getProductofSeller,getAllProduct,findProductByName,findProductWithCategory,findProductWithCategoryHome}
 

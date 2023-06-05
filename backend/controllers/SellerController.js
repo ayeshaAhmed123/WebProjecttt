@@ -51,16 +51,31 @@ const update=async (req, res) => {
 }
 const delAccount = async (req, res) => {
     try {
+      if(req.ID==req.params.id){
+
+     
         let id=req.params.id;
       const seller = await sellerModel.findByIdAndDelete(id);
       if (!seller) {
         return res.status(404).send('Seller not found');
       }
       res.send(seller);
+    }else{
+      return res.status(404).send('you can not delete other seller account');
+    }
     } catch (err) {
       res.status(400).send(err.message);
     }
+}
+const getAllSellers =async (req,res)=>
+{
+  try{
+    const sellers = await sellerModel.find();
+    res.json(sellers);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
+   
+}
 
-
-module.exports={signup,login,update,delAccount};
+module.exports={signup,login,update,delAccount,getAllSellers};

@@ -14,7 +14,6 @@ const getOrderOfSeller = async (req, res) => {
 
     // Extract product IDs from products array
     const productIds = products.map(product => product._id); 
-
     const orderItems = await orderItemModel.find({ product_id: { $in: productIds } });
     const orderIds= orderItems.map(orderitem => orderitem.order_id );
     const uniqueorder = [...new Set(orderIds)];

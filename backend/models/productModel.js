@@ -4,25 +4,20 @@ const productSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true 
-    },
-    description: {
+    },    description: {
         type: String,
         required: true
-     },
-    price: {
+     },    price: {
         type: Number,
         required: true
-    },
-    stock_quantity: {
+    },    stock_quantity: {
         type: Number,
         required: true
-    },
-    seller_id: {
+    },    seller_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Seller',
         required: true
-    },
-    image: {
+    },    image: {
         type:String,
         required: true
     },
