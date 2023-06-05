@@ -10,18 +10,11 @@ function ShowProducts({
   findProductWithCategoryHome,
 }) {
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   useEffect(() => {
     fetchProducts();
-
-    let newArray = products.map((product) => product.category);
-    console.log("newArray", newArray);
-    const unique = [...new Set(newArray)];
-    console.log("unique", unique);
-    setCategories(unique);
-    console.log("categories", categories);
-  }, [fetchProducts]);
+  }, []);
 
   useEffect(() => {
     if (selectedCategory === "All") {
@@ -34,7 +27,7 @@ function ShowProducts({
   const searchByCategory = (category) => {
     if (category === "All") {
       fetchProducts();
-      setSelectedCategory("");
+      setSelectedCategory("All");
     } else {
       findProductWithCategoryHome(category);
       setSelectedCategory(category);
@@ -48,7 +41,7 @@ function ShowProducts({
       <div className="buttons d-flex justify-content-center mb-5 pb-4">
         <button
           className={`btn btn-outline-dark me-2 ${
-            selectedCategory === "" ? "active" : ""
+            selectedCategory === "All" && "active"
           }`}
           onClick={() => searchByCategory("All")}
         >
@@ -57,7 +50,7 @@ function ShowProducts({
         {categories.map((category) => (
           <button
             className={`btn btn-outline-dark me-2 ${
-              selectedCategory === category ? "active" : ""
+              selectedCategory === category && "active"
             }`}
             key={category}
             onClick={() => searchByCategory(category)}

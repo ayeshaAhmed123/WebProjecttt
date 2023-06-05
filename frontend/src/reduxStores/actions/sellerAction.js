@@ -39,10 +39,10 @@ export const login = (email,password) => {
     }
   };
 };
-export const addSeller = (seller) => {
+export const addSeller = (name,email,password,address,phone) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post('http://localhost:5005/seller/signup', seller);
+      const response = await axios.post('http://localhost:5005/seller/signup', {name,email,password,address,phone});
       dispatch(sellerSignup(response.data));
     } catch (error) {      
         console.log(error)

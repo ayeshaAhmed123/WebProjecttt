@@ -21,6 +21,7 @@ export const fetchProducts = () => {
   return async (dispatch) => {
     try {
       const response = await axios.get('http://localhost:5005/product/get');
+      console.log(response.data)
       dispatch(fetchProductsSuccess(response.data));
     } catch (error) {
       console.log(error)
