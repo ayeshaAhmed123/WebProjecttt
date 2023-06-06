@@ -4,12 +4,13 @@ import Img1 from "../assets/LOGOOO.jpg";
 import Footer from "./Footer";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../reduxStores/actions/sellerAction";
-import { connect } from "react-redux";
-
-function Login({ sellers, login, error }) {
+import { connect, useDispatch } from "react-redux";
+import { changeLogin } from "../reduxStores/actions/Login";
+function Login({ sellers, login, error, changeLogin }) {
   const email = useRef();
   const password = useRef();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,6 +19,7 @@ function Login({ sellers, login, error }) {
     console.log(emailq, passwordq);
     try {
       await login(emailq, passwordq);
+      changeLogin(true);
       navigate("/seller");
     } catch (error) {
       if (error.response && error.response.data) {
@@ -145,6 +147,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   login: login,
+  changeLogin: changeLogin,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

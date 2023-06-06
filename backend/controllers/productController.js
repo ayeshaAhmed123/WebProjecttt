@@ -3,7 +3,9 @@ const productModel=require("../models/productModel");
 
 
 const create=async (req, res) => {
-    let {name,description,price,stock_quantity,seller_id,image,category}=req.body;
+  console.log(req.product,req.body)
+    let {name,description,price,stock_quantity,image,category}=req.body;
+    let seller_id=req.ID;
     const product = new productModel({
       name: name,
       description: description,
@@ -25,8 +27,9 @@ const updateProduct=async (req, res) => {
     // await userModel.updateOne()
     update = await productModel.updateOne({_id:id},
         { $set: req.body }
-    ).then((update) => {
-        res.status(200).json(update)
+    ).then(async(update) => {
+      const product= await productModel.findOne({_id:id}) 
+        res.status(200).json(product)
     }).catch(err => {
         res.status(500).json({ "Message": "product Can not be updated", err: err })
     })
@@ -64,9 +67,7 @@ const getProductofSeller=async (req, res) => {
   const findProductByName = async (req, res) => {
    try{
       const name = req.params.name;
-      const product = await productModel.findOne({
-        name: { $regex: new RegExp(name, 'i') }
-      });
+      const product = await productModel.findOne({ name: { $regex: new RegExp(name, 'i') } , seller_id: req.ID})
       if (!product) {
         return res.status(404).json({ message: 'Product not found' });
       }

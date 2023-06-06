@@ -7,9 +7,19 @@ export const getCurrentState = () => {
   };
 };
 
-export const setLogin = (isLogin) => {
-  return {
+ const setLogin = (isLogin) => ({
+  
     type: "SET_LOGIN",
     payload: isLogin,
+  
+});
+
+export const changeLogin = (loginStatus) => {
+  return  (dispatch) => {
+    try {
+      dispatch(setLogin(loginStatus));
+    } catch (error) {
+      console.log(error);
+    }
   };
 };

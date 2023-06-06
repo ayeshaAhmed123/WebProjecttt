@@ -6,7 +6,8 @@ const sellerModel=require("../models/sellerModel");
 const Authenticate = (req, res, next) => {
   // Extract the token from the request header
   const token = req.headers.authorization.split(' ')[1];
-  
+
+  console.log("token",token)
   // Verify the token and decode the payload
   jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
     if (!err) {
@@ -14,7 +15,6 @@ const Authenticate = (req, res, next) => {
       req.token = decoded;
       console.log(decoded);
       req.ID=decoded.id;
-     // req.role=decoded.role;
       next();
     } else {
       // If the token is invalid, return an error message
