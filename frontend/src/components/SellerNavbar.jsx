@@ -12,12 +12,9 @@ function SellerNavbar({ isLogin, getCurrentState }) {
     getCurrentState();
     const ttoken = localStorage.getItem("token");
     const storedSellerString = localStorage.getItem("seller");
-    console.log("storedSellerString:", storedSellerString);
     const storedSeller = JSON.parse(storedSellerString);
-    console.log("storedSeller:", storedSeller);
     setSeller(storedSeller);
     setToken(ttoken);
-    console.log(token, seller);
   }, []);
 
   return (

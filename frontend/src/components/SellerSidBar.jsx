@@ -4,9 +4,12 @@ import SellerProduct from "./SellerProduct";
 import AddProduct from "./addProduct";
 import DeleteProduct from "./DelettProduct";
 import UpdateProduct from "./UpdateProduct";
+import OrderView from "./orderView";
+import ShowProductOrder from "./showProductOrder";
 function SellerSidebar() {
   const [activeItem, setActiveItem] = useState("home");
   const [showSubMenu, setShowSubMenu] = useState(false);
+  const [showSubMenu2, setShowSubMenu2] = useState(false);
   const [seller, setSeller] = useState({});
   const [token, setToken] = useState("");
 
@@ -20,11 +23,14 @@ function SellerSidebar() {
   const handleItemClick = (item) => {
     if (item === "products") {
       setShowSubMenu(!showSubMenu);
+      setShowSubMenu2(false);
+    } else if (item === "orders") {
+      setShowSubMenu2(!showSubMenu2);
+      setShowSubMenu(false);
     } else {
       setActiveItem(item);
     }
   };
-
   return (
     <div className="d-flex justify-content-center">
       <div
@@ -173,13 +179,78 @@ function SellerSidebar() {
               }}
             >
               <i
+                className="fa fa-th-large me-3"
+                aria-hidden="true"
+                style={{ fontSize: "20px" }}
+              ></i>
+              <span className="fs-5">Orders</span>
+            </a>
+            {showSubMenu2 && (
+              <ul className="sub-menu list">
+                <li
+                  className="li"
+                  style={{
+                    backgroundColor: activeItem === "orderView" ? "purple" : "",
+                    color: activeItem === "orderView" ? "white" : "",
+                  }}
+                >
+                  <a
+                    href="#"
+                    className={`sub-menu-item fs-6 ${
+                      activeItem === "orderView"
+                        ? "active"
+                        : "nav-link text-white"
+                    }`}
+                    onClick={() => handleItemClick("orderView")}
+                  >
+                    View Your Orders
+                  </a>
+                </li>
+                <hr />
+                <li
+                  className="li"
+                  style={{
+                    backgroundColor:
+                      activeItem === "productOrder" ? "purple" : "",
+                    color: activeItem === "productOrder" ? "white" : "",
+                  }}
+                >
+                  <a
+                    href="#"
+                    className={`sub-menu-item fs-6 ${
+                      activeItem === "productOrder"
+                        ? "active"
+                        : "nav-link text-white"
+                    }`}
+                    onClick={() => handleItemClick("productOrder")}
+                  >
+                    Product Order
+                  </a>
+                </li>
+                <hr />
+              </ul>
+            )}
+          </li>
+          {/* <li>
+            <a
+              href="#"
+              className={`nav-link ${
+                activeItem === "orders" ? "active" : "nav-link text-white"
+              }`}
+              onClick={() => handleItemClick("orders")}
+              style={{
+                backgroundColor: activeItem === "orders" ? "purple" : "",
+                color: activeItem === "orders" ? "white" : "",
+              }}
+            >
+              <i
                 className="fa fa-table me-3"
                 aria-hidden="true"
                 style={{ fontSize: "20px" }}
               ></i>
               <span className="fs-5">Orders</span>
             </a>
-          </li>
+          </li> */}
         </ul>
         <hr />
         <div className="dropdown"></div>
@@ -187,7 +258,7 @@ function SellerSidebar() {
       {activeItem === "home" && (
         <div className="container fs-3 py-5">
           <h1 className="text-center">Welcome {seller.name}</h1>
-          <div class="row">
+          <div className="row">
             <div className="col-md-8 offset-md-2">
               <p className="lead text-center">
                 We are thrilled to have you join our platform as a valued
@@ -216,7 +287,16 @@ function SellerSidebar() {
           </div>
         </div>
       )}
-
+      {activeItem === "orderView" && (
+        <div className="container">
+          <OrderView />
+        </div>
+      )}
+      {activeItem === "productOrder" && (
+        <div className="container">
+          <ShowProductOrder />
+        </div>
+      )}
       {activeItem === "viewP" && (
         <div className="container">
           <SellerProduct />
